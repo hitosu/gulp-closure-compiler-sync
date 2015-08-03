@@ -1,5 +1,4 @@
 var Buffer = require('buffer').Buffer;
-var child_process = require('child_process');
 var fs = require('graceful-fs');
 var glob = require('glob');
 var gutil = require('gulp-util');
@@ -9,15 +8,16 @@ var tempWrite = require('temp-write');
 var through = require('through');
 var tmpdir = require('os').tmpdir();
 var uuid = require('uuid');
+var execFileSyncLib = require('exec-file-sync');
 
-const PLUGIN_NAME = 'gulp-closure-library';
+const PLUGIN_NAME = 'gulp-closure-compiler-sync';
 
-module.exports = function(opt, execFile_opt) {
+module.exports = function(opt, execFileSync_opt) {
   opt = opt || {};
   opt.maxBuffer = opt.maxBuffer || 1000;
   opt.continueWithWarnings = opt.continueWithWarnings || false;
   var files = [];
-  var execFile = execFile_opt || child_process.execFile;
+  var execFileSync = execFileSync_opt || execFileSyncLib;
 
   if (!opt.fileName && !hasModules())
     throw new gutil.PluginError(PLUGIN_NAME, 'Missing fileName option.');
@@ -103,7 +103,8 @@ module.exports = function(opt, execFile_opt) {
 
     // Enable custom max buffer to fix "stderr maxBuffer exceeded" error. Default is 1000*1024.
     var executable = opt.compilerPath ? 'java' : 'closure-compiler';
-    var jar = execFile(executable, args, { maxBuffer: opt.maxBuffer*1024 }, function(error, stdout, stderr) {
+
+    var execFileCB = function(error, stdout, stderr) {
       if (error || (stderr && !opt.continueWithWarnings)) {
         this.emit('error', new gutil.PluginError(PLUGIN_NAME, error || stderr));
         return;
@@ -132,8 +133,17 @@ module.exports = function(opt, execFile_opt) {
         }
         this.emit('end');
       }.bind(this));
+    }.bind(this);
 
-    }.bind(this));
+    var stdout = "";
+    try {
+      stdout = execFileSync(executable, args, { maxBuffer: opt.maxBuffer*1024 });  
+    } catch(e) {
+      execFileCB(e,stdout);
+      return
+    }
+    execFileCB(null,stdout);
+    return;
   }
 
   return through(bufferContents, endStream);
