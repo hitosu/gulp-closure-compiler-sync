@@ -1,11 +1,11 @@
 {
-  "name": "gulp-closure-compiler",
+  "name": "gulp-closure-compiler-sync",
   "version": "0.3.0",
-  "description": "Gulp plugin for Google Closure Compiler",
+  "description": "Gulp plugin for Google Closure Compiler with sync compilation",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/steida/gulp-closure-compiler.git"
+    "url": "https://github.com/hitosu/gulp-closure-compiler-sync.git"
   },
   "author": {
     "name": "Daniel Steigerwald",
@@ -35,7 +35,8 @@
     "mkdirp": "^0.5.0",
     "temp-write": "^1.0.0",
     "through": "^2.3.4",
-    "uuid": "^2.0.1"
+    "uuid": "^2.0.1",
+    "exec-file-sync": "~2.0.0"
   },
   "devDependencies": {
     "event-stream": "^3.1.0",
