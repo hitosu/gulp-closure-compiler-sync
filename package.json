@@ -1,6 +1,6 @@
 {
   "name": "gulp-closure-compiler-sync",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Gulp plugin for Google Closure Compiler with sync compilation",
   "license": "MIT",
   "repository": {
@@ -8,8 +8,8 @@
     "url": "https://github.com/hitosu/gulp-closure-compiler-sync.git"
   },
   "author": {
-    "name": "Daniel Steigerwald",
-    "url": "https://github.com/steida"
+    "name": "Vasily Kazantsev",
+    "url": "https://github.com/hitosu"
   },
   "engines": {
     "node": ">=0.10.0"
