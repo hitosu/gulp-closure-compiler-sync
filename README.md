@@ -8,4 +8,4 @@ This is a fork of [steida/gulp-closure-compiler](https://github.com/steida/gulp-
 
 ## License
 
-MIT © [Daniel Steigerwald](https://github.com/steida)
+MIT © [Daniel Steigerwald](https://github.com/steida) , [Vasily Kazantsev](https://github.com/hitosu)
